@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purogenix - Doctor's Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.6;
+        }
+        #backButton {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+}
+
+#backButton:hover {
+    background-color: #3e8e41;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Purogenix</h1>
+        <p>Purogenix is an innovative doctor's assistant platform designed to bridge the gap between patients and healthcare professionals effortlessly. Our goal is to enhance accessibility and convenience in medical consultations.</p>
+        <p>One of our key features is an intelligent chatbot that facilitates seamless communication between patients and doctors, ensuring a smooth and efficient experience.</p>
+        <p>Additionally, we offer a unique <strong>Symptom Checker</strong>, an AI-powered chatbot designed for individuals who hesitate to consult a doctor immediately. By analyzing symptoms, it provides preliminary insights, helping users make informed decisions about seeking medical attention.</p>
+        <p>At Purogenix, we prioritize healthcare accessibility and efficiency, ensuring that patients receive the guidance they need at the right time.</p>
+
+    <button id="backButton" onclick="goBack()">Back</button>
+    </div><script>
+        function goBack() {
+    window.history.back();
+}
+
+// Check if there is a previous page
+window.addEventListener('load', function() {
+    if (window.history.length > 1) {
+        document.getElementById('backButton').style.display = 'block';
+    } else {
+        document.getElementById('backButton').style.display = 'none';
+    }
+});
+
+// Update back button display when history changes
+window.addEventListener('popstate', function() {
+    if (window.history.length > 1) {
+        document.getElementById('backButton').style.display = 'block';
+    } else {
+        document.getElementById('backButton').style.display = 'none';
+    }
+});
+
+    </script>
+</body>
+</html>
