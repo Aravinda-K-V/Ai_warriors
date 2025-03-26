@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Contacts - Purogenix</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        #backButton {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+}
+
+#backButton:hover {
+    background-color: #3e8e41;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Contact Details of Doctors</h1>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Specialization</th>
+                <th>Contact</th>
+            </tr>
+            <tr>
+                <td>Dr. Aditi Sharma</td>
+                <td>Cardiologist</td>
+                <td>+91 9876543210</td>
+            </tr>
+            <tr>
+                <td>Dr. Rajesh Verma</td>
+                <td>Dermatologist</td>
+                <td>+91 8765432109</td>
+            </tr>
+            <tr>
+                <td>Dr. Priya Nair</td>
+                <td>Neurologist</td>
+                <td>+91 7654321098</td>
+            </tr>
+            <tr>
+                <td>Dr. Arjun Khanna</td>
+                <td>Orthopedic</td>
+                <td>+91 6543210987</td>
+            </tr>
+            <tr>
+                <td>Dr. Sneha Reddy</td>
+                <td>Pediatrician</td>
+                <td>+91 5432109876</td>
+            </tr>
+            <tr>
+                <td>Dr. Anil Mehta</td>
+                <td>ENT Specialist</td>
+                <td>+91 4321098765</td>
+            </tr>
+            <tr>
+                <td>Dr. Kavita Joshi</td>
+                <td>Gastroenterologist</td>
+                <td>+91 3210987654</td>
+            </tr>
+            <tr>
+                <td>Dr. Rohan Desai</td>
+                <td>Oncologist</td>
+                <td>+91 2109876543</td>
+            </tr>
+            <tr>
+                <td>Dr. Neha Kapoor</td>
+                <td>Psychiatrist</td>
+                <td>+91 1098765432</td>
+            </tr>
+            <tr>
+                <td>Dr. Vishal Singh</td>
+                <td>General Physician</td>
+                <td>+91 9988776655</td>
+            </tr>
+            <tr>
+                <td>Dr. Meera Patil</td>
+                <td>Gynecologist</td>
+                <td>+91 8877665544</td>
+            </tr>
+            <tr>
+                <td>Dr. Sameer Rao</td>
+                <td>Endocrinologist</td>
+                <td>+91 7766554433</td>
+            </tr>
+            <tr>
+                <td>Dr. Akash Malhotra</td>
+                <td>Urologist</td>
+                <td>+91 6655443322</td>
+            </tr>
+            <tr>
+                <td>Dr. Sunita Aggarwal</td>
+                <td>Ophthalmologist</td>
+                <td>+91 5544332211</td>
+            </tr>
+            <tr>
+                <td>Dr. Mohan Das</td>
+                <td>Radiologist</td>
+                <td>+91 4433221100</td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <button id="backButton" onclick="goBack()">Back</button>
+
+    </div>
+    <script>function goBack() {
+        window.history.back();
+    }
+    
+    // Check if there is a previous page
+    window.addEventListener('load', function() {
+        if (window.history.length > 1) {
+            document.getElementById('backButton').style.display = 'block';
+        } else {
+            document.getElementById('backButton').style.display = 'none';
+        }
+    });
+    
+    // Update back button display when history changes
+    window.addEventListener('popstate', function() {
+        if (window.history.length > 1) {
+            document.getElementById('backButton').style.display = 'block';
+        } else {
+            document.getElementById('backButton').style.display = 'none';
+        }
+    });
+    
+    </script>
+</body>
+</html>
