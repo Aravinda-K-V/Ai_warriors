@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Symptom Checker</title>
+<style>
+body {
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f4f4f4;
+}
+
+.container {
+  width: 500px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#result {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+}
+#backButton {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+}
+
+#backButton:hover {
+    background-color: #3e8e41;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>What are your symptoms?</h2>
+  <textarea id="symptoms" placeholder="Enter your symptoms (e.g., I have a fever and a cough)"></textarea>
+  <button onclick="checkSymptoms()">Check Symptoms</button>
+  <button onclick="eraseSymptoms()">Erase</button>  
+  <button id="backButton" onclick="goBack()">Back</button>
+
+  <div id="result"></div>
+</div>
+
+<script>
+function checkSymptoms() {
+  const symptomsInput = document.getElementById('symptoms').value.toLowerCase();
+  const symptomsArray = symptomsInput.split(/[\s,.;!?-]+/);
+
+  const conditions = {
+    "fever": { disease: "Flu or Infection", symptoms: ["fever", "chills", "body aches", "fatigue"] },
+    "cough": { disease: "Cold or Respiratory Infection", symptoms: ["cough", "sore throat", "runny nose", "fatigue"] },
+    "headache": { disease: "Migraine or Tension Headache", symptoms: ["headache", "nausea", "sensitivity to light", "neck pain"] },
+    "shortness of breath": { disease: "Asthma or COPD", symptoms: ["shortness of breath", "wheezing", "tight chest", "coughing"] },
+    "chest pain": { disease: "Heart Disease or Panic Attack", symptoms: ["chest pain", "shortness of breath", "dizziness", "nausea"] },
+    "nausea": { disease: "Food Poisoning or Stomach Flu", symptoms: ["nausea", "vomiting", "diarrhea", "stomach cramps"] },
+    "rash": { disease: "Allergic Reaction or Skin Infection", symptoms: ["rash", "itching", "redness", "swelling"] },
+    "sore throat": { disease: "Strep Throat or Tonsillitis", symptoms: ["sore throat", "difficulty swallowing", "fever", "headache"] },
+    "fatigue": { disease: "Anemia or Chronic Fatigue Syndrome", symptoms: ["fatigue", "weakness", "dizziness", "headache"] },
+    "dizziness": { disease: "Dehydration or Inner Ear Infection", symptoms: ["dizziness", "lightheadedness", "nausea", "balance problems"] },
+    "abdominal pain": { disease: "Gastritis or Appendicitis", symptoms: ["abdominal pain", "bloating", "nausea", "vomiting"] },
+    "back pain": { disease: "Muscle Strain or Sciatica", symptoms: ["back pain", "stiffness", "numbness", "tingling"] },
+    "joint pain": { disease: "Arthritis or Injury", symptoms: ["joint pain", "swelling", "stiffness", "redness"] },
+    "runny nose": { disease: "Common Cold or Allergies", symptoms: ["runny nose", "sneezing", "congestion", "itchy eyes"] },
+    "diarrhea": { disease: "Gastroenteritis or Food Intolerance", symptoms: ["diarrhea", "cramps", "dehydration", "fever"] },
+    "constipation": { disease: "Dehydration or Irritable Bowel Syndrome", symptoms: ["constipation", "bloating", "abdominal discomfort", "straining"] },
+    "leg cramps": { disease: "Dehydration or Muscle Strain", symptoms: ["leg cramps", "muscle spasms", "pain", "tightness"] },
+    "insomnia": { disease: "Stress or Anxiety", symptoms: ["insomnia", "difficulty sleeping", "restlessness", "fatigue"] },
+    "heartburn": { disease: "Acid Reflux or GERD", symptoms: ["heartburn", "chest pain", "sour taste", "cough"] },
+    "blurred vision": { disease: "Migraine or Eye Strain", symptoms: ["blurred vision", "headache", "eye pain", "sensitivity to light"] },
+    "ear pain": { disease: "Ear Infection or Sinusitis", symptoms: ["ear pain", "hearing loss", "fever", "congestion"] },
+    "swollen glands": { disease: "Infection or Mononucleosis", symptoms: ["swollen glands", "sore throat", "fever", "fatigue"] },
+    "weight loss": { disease: "Hyperthyroidism or Diabetes", symptoms: ["weight loss", "increased appetite", "fatigue", "sweating"] },
+    "weight gain": { disease: "Hypothyroidism or Depression", symptoms: ["weight gain", "fatigue", "cold intolerance", "mood changes"] },
+    "frequent urination": { disease: "Diabetes or Urinary Tract Infection", symptoms: ["frequent urination", "thirst", "burning sensation", "abdominal pain"] },
+    "skin dryness": { disease: "Eczema or Dehydration", symptoms: ["skin dryness", "itching", "redness", "flaking"] },
+    "hair loss": { disease: "Stress or Hormonal Imbalance", symptoms: ["hair loss", "thinning hair", "scalp irritation", "fatigue"] },
+    "mouth ulcers": { disease: "Vitamin Deficiency or Infection", symptoms: ["mouth ulcers", "pain", "redness", "swelling"] },
+    "nosebleeds": { disease: "Dry Air or Injury", symptoms: ["nosebleeds", "congestion", "headache", "dizziness"] },
+    "tremors": { disease: "Parkinson's Disease or Anxiety", symptoms: ["tremors", "shaking", "muscle stiffness", "balance problems"] },
+    "ringing in ears": { disease: "Tinnitus or Ear Infection", symptoms: ["ringing in ears", "hearing loss", "dizziness", "ear pain"] },
+    "swollen ankles": { disease: "Heart Failure or Kidney Disease", symptoms: ["swollen ankles", "shortness of breath", "fatigue", "chest pain"] },
+    "bruising easily": { disease: "Vitamin Deficiency or Blood Disorder", symptoms: ["bruising easily", "bleeding gums", "fatigue", "weakness"] },
+    "cold hands and feet": { disease: "Poor Circulation or Anemia", symptoms: ["cold hands and feet", "numbness", "tingling", "fatigue"] },
+    "night sweats": { disease: "Infection or Menopause", symptoms: ["night sweats", "fever", "weight loss", "fatigue"] },
+    "hoarseness": { disease: "Laryngitis or Vocal Cord Strain", symptoms: ["hoarseness", "sore throat", "cough", "difficulty swallowing"] },
+    "facial pain": { disease: "Sinusitis or Trigeminal Neuralgia", symptoms: ["facial pain", "headache", "congestion", "tooth pain"] },
+    "muscle weakness": { disease: "Multiple Sclerosis or Muscular Dystrophy", symptoms: ["muscle weakness", "fatigue", "difficulty walking", "balance problems"] },
+    "balance problems": { disease: "Inner Ear Infection or Stroke", symptoms: ["balance problems", "dizziness", "nausea", "vomiting"] },
+    "memory loss": { disease: "Alzheimer's Disease or Stress", symptoms: ["memory loss", "confusion", "difficulty concentrating", "mood changes"] },
+    "slurred speech": { disease: "Stroke or Alcohol Intoxication", symptoms: ["slurred speech", "weakness", "dizziness", "numbness"] },
+    "seizures": { disease: "Epilepsy or Brain Injury", symptoms: ["seizures", "loss of consciousness", "muscle spasms", "confusion"] },
+    "jaundice": { disease: "Hepatitis or Liver Disease", symptoms: ["jaundice", "abdominal pain", "nausea", "fatigue"] },
+    "blood in urine": { disease: "Urinary Tract Infection or Kidney Stones", symptoms: ["blood in urine", "painful urination", "abdominal pain", "fever"] },
+    "bloating": { disease: "Irritable Bowel Syndrome or Food Intolerance", symptoms: ["bloating", "abdominal pain", "gas", "constipation"] },
+    "gas": { disease: "Food Intolerance or Indigestion", symptoms: ["gas", "abdominal pain", "bloating", "cramps"] },
+    "hives": { disease: "Allergic Reaction or Skin Infection", symptoms: ["hives", "itching", "redness", "swelling"] },
+    "lumps": { disease: "Cyst or Tumor", symptoms: ["lumps", "pain", "redness", "swelling"] },
+    "vision changes": { disease: "Glaucoma or Cataracts", symptoms: ["vision changes", "blurred vision", "eye pain", "halos around lights"] },
+    "hearing loss": { disease: "Age-related Hearing Loss or Ear Infection", symptoms: ["hearing loss", "ringing in ears", "ear pain", "dizziness"] },
+    "difficulty swallowing": { disease: "Strep Throat or Tonsillitis", symptoms: ["difficulty swallowing", "sore throat", "fever", "hoarseness"] },
+    "chest tightness": { disease: "Anxiety or Asthma", symptoms: ["chest tightness", "shortness of breath", "coughing", "wheezing"] },
+    "palpitations": { disease: "Anxiety or Heart Arrhythmia", symptoms: ["palpitations", "chest pain", "dizziness", "shortness of breath"] },
+  };
+
+  let foundConditions = [];
+  let foundSymptoms = [];
+  let showAll = false;
+
+  for (const key in conditions) {
+    if (symptomsArray.some(symptom => conditions[key].symptoms.includes(symptom))) {
+      foundConditions.push(conditions[key].disease);
+      foundSymptoms.push(...conditions[key].symptoms.filter(symptom => symptomsArray.includes(symptom)));
+    }
+  }
+
+  if (symptomsInput.includes("etc")) {
+    showAll = true;
+  }
+
+  if (foundConditions.length > 3 && !showAll) {
+    document.getElementById('result').innerHTML = `
+      <p>Possible Diseases: ${foundConditions.slice(0, 3).join(', ')} etc..</p>
+      <p>Matching Symptoms: ${[...new Set(foundSymptoms)].join(', ')}</p>
+    `;
+  } else if (foundConditions.length > 0) {
+    document.getElementById('result').innerHTML = `
+      <p>Possible Diseases: ${[...new Set(foundConditions)].join(', ')}</p>
+      <p>Matching Symptoms: ${[...new Set(foundSymptoms)].join(', ')}</p>
+    `;
+  } else {
+    document.getElementById('result').innerHTML = "<p>No matching conditions found.</p>";
+  }
+}
+
+function eraseSymptoms() {
+  document.getElementById('symptoms').value = '';
+  document.getElementById('result').innerHTML = '';
+}
+function goBack() {
+    window.history.back();
+}
+
+// Check if there is a previous page
+window.addEventListener('load', function() {
+    if (window.history.length > 1) {
+        document.getElementById('backButton').style.display = 'block';
+    } else {
+        document.getElementById('backButton').style.display = 'none';
+    }
+});
+
+// Update back button display when history changes
+window.addEventListener('popstate', function() {
+    if (window.history.length > 1) {
+        document.getElementById('backButton').style.display = 'block';
+    } else {
+        document.getElementById('backButton').style.display = 'none';
+    }
+});
+
+
+</script>
+</body>
+</html>
