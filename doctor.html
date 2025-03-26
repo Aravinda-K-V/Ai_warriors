@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PuroGenix - Doctor Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #72EDF2, #5151E5);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            margin-top: 80px;
+        }
+        h1 {
+            color: #333;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+            width: 200px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        .box i {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to PuroGenix Doctor Portal</h1>
+        <p>Select an option below to proceed:</p>
+        <div class="options">
+            <div class="box" onclick="openFeature('view-appointments')">
+                <i class="fas fa-calendar-alt"></i>
+                <p>View Appointments</p>
+            </div>
+            <div class="box" onclick="openFeature('consultation-requests')">
+                <i class="fas fa-user-check"></i>
+                <p>Consultation Requests</p>
+            </div>
+            <div class="box" onclick="openFeature('patient-records')">
+                <i class="fas fa-file-medical"></i>
+                <p>Patient Medical Records</p>
+            </div>
+            <div class="box" onclick="openFeature('chat-patients')">
+                <i class="fas fa-comment-medical"></i>
+                <p>Chat with Patients</p>
+            </div>
+            <div class="box" onclick="openFeature('prescription')">
+                <i class="fas fa-prescription"></i>
+                <p>E-Prescription Generator</p>
+            </div>
+            <div class="box" onclick="openFeature('availability')">
+                <i class="fas fa-clock"></i>
+                <p>Set Availability</p>
+            </div>
+            <div class="box" onclick="openFeature('billing')">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <p>Billing & Payments</p>
+            </div>
+            <div class="box" onclick="openFeature('ai-diagnosis')">
+                <i class="fas fa-microscope"></i>
+                <p>AI Diagnosis Assistant</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function openFeature(feature) {
+            switch (feature) {
+                case 'view-appointments':
+                    alert('View Appointments: Check scheduled patient visits.');
+                    break;
+                case 'consultation-requests':
+                    alert('Consultation Requests: Accept or decline requests from patients.');
+                    break;
+                case 'patient-records':
+                    alert('Patient Medical Records: Access medical history for diagnosis.');
+                    break;
+                case 'chat-patients':
+                    alert('Chat with Patients: Securely communicate with patients.');
+                    break;
+                case 'prescription':
+                    alert('E-Prescription: Generate and send prescriptions online.');
+                    break;
+                case 'availability':
+                    alert('Set Availability: Manage consultation hours and schedule.');
+                    break;
+                case 'billing':
+                    alert('Billing & Payments: Handle invoices and payments.');
+                    break;
+                case 'ai-diagnosis':
+                    alert('AI Diagnosis Assistant: Get AI-based health insights.');
+                    break;
+                default:
+                    alert('Feature coming soon!');
+            }
+        }
+    </script>
+</body>
+</html>
