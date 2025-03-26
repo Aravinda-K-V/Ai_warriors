@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        #chatbox {
+            width: 600px;
+            height: 800px;
+            border: 1px solid #dfa5a5;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        #responses {
+            padding: 10px;
+        }
+        .user-message {
+            background-color: #fbf7f7;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .chatbot-message {
+            background-color: #78bbbb;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        #backButton {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+}
+
+#backButton:hover {
+    background-color: #3e8e41;
+}
+
+    </style>
+</head>
+<body>
+    <h1>respond Chatbot</h1>
+    <div id="chatbox">
+        <div id="responses"></div>
+        <input type="text" id="userInput" placeholder="Type your message here...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <button id="backButton" onclick="goBack()">Back</button>
+
+    <script>
+        const intents = {
+            "greeting": ["hello", "hi", "hey", "good morning", "good afternoon", "good evening"],
+            "goodbye": ["bye", "see you later", "exit", "goodbye", "farewell"],
+            "name": ["name","what is name","tell your name"],
+            "thanks": ["thank you", "thanks", "appreciate it", "grateful"],
+            "joke": ["tell me a joke", "joke", "make me laugh"],
+            "unknown": ["I didn't understand that. Please try again."],
+            "about": ["what is your purpose", "what do you do", "about you"],
+            "creator": ["who created you", "your creator", "who made you"],
+            "age": ["how old are you", "your age", "age"],
+            "love": ["I love you ","how to love a preson","love"],
+            "kill": ["i kill you","kill","how to kill you","kill" ],
+            "location": ["where are you from", "your location", "location"],
+            "need":["i need help","i check my health condition ","help","need"]
+        };
+
+        const responses = {
+            "greeting": [
+                "Hello! How are you?",
+                "Hi! What's up?",
+                "Hey! How can I help you?",
+                "Good morning! How are you today?",
+                "Good afternoon! What can I do for you?",
+                "Good evening! How can I assist you?"
+            ],
+            "goodbye": [
+                "Goodbye! It was nice chatting with you.",
+                "See you later! Have a great day.",
+                "Bye! Come back soon.",
+                "Goodbye! It was great talking to you.",
+                "Farewell! May the odds be ever in your favor."
+            ],
+            "love": [
+                "I'm just a chatbot, I don't have a physical body",
+                "i am sorrye",
+            ],
+            "kill": [
+                "I'm just a chatbot, I don't have a physical body,you not killing is posiabel instabe you can delete me",
+                "sorry,not horting any pepole",
+            ],
+            "thanks": [
+                "You're welcome!",
+                "No problem!",
+                "Appreciate it!",
+                "Grateful for your kind words!"
+            ],
+            "joke": [
+                "Why don't scientists trust atoms? Because they make up everything!",
+                "Why don't eggs tell jokes? They'd crack each other up!",
+                "Why did the tomato turn red? Because it saw the salad dressing!",
+                "What do you call a fake noodle? An impasta!",
+                "Why did the scarecrow win an award? Because he was outstanding in his field!"
+            ],
+            "name": ["my name is purgenix"],
+            "unknown": [
+                "Sorry, I'm not sure what you mean. Can you please rephrase?",
+                "I'm not sure I understand. Can you please provide more context?",
+                "u need more information contact the doctors "
+            ],
+            "about": [
+                "I'm an advanced chatbot designed to assist and communicate with users.",
+                "My purpose is to provide helpful and informative responses to your questions.",
+                "I'm here to help and provide assistance whenever you need it."
+            ],
+            "creator": [
+                "I was created by a team of developers using advanced natural language processing techniques.",
+                "My creator is a team of skilled developers who are passionate about AI and machine learning.",
+                "I was built using a combination of machine learning algorithms and natural language processing techniques."
+            ],
+            "need":[ "u need any need to check any symptoms press on symptoms checker "
+            ],
+            "age": [
+                "I'm just a chatbot, I don't have a physical body, so I don't have an age.",
+                "I'm ageless! I've been designed to assist and communicate with users of the age.",
+               
+        ],
+        "location": [
+            "I'm a virtual assistant, I don't have a physical location.",
+            "I exist in the cloud, so I don't have a specific location.",
+            "I'm a digital entity, so I don't have a physical presence in any location."
+        ]
+    };
+
+    let conversationContext = {};
+
+    function matchIntent(message) {
+        for (const intent in intents) {
+            for (const keyword of intents[intent]) {
+                if (message.toLowerCase().includes(keyword.toLowerCase())) {
+                    return intent;
+                }
+            }
+        }
+        return "unknown";
+    }
+
+    function respond(message) {
+        const intent = matchIntent(message);
+        let response;
+
+        if (intent === "unknown") {
+            response = responses[intent][0];
+        } else {
+            response = responses[intent][Math.floor(Math.random() * responses[intent].length)];
+        }
+
+        // Add context to the conversation
+        if (intent === "greeting") {
+            conversationContext.name = message.split(" ")[1];
+        }
+
+        return response;
+    }
+
+    function sendMessage() {
+        const userInput = document.getElementById("userInput").value;
+        const response = respond(userInput);
+        const responsesDiv = document.getElementById("responses");
+
+        responsesDiv.innerHTML += `
+            <div class="user-message">${userInput}</div>
+            <div class="chatbot-message">${response}</div>
+        `;
+        document.getElementById("userInput").value = '';
+
+        if (matchIntent(userInput) === "goodbye") {
+            document.getElementById("chatbox").style.display = "none";
+        }
+    }
+    function goBack() {
+    window.history.back();
+}
+
+// Check if there is a previous page
+window.addEventListener('load', function() {
+    if (window.history.length > 1) {
+        document.getElementById('backButton').style.display = 'block';
+    } else {
+        document.getElementById('backButton').style.display = 'none';
+    }
+});
+
+// Update back button display when history changes
+window.addEventListener('popstate', function() {
+    if (window.history.length > 1) {
+        document.getElementById('backButton').style.display = 'block';
+    } else {
+        document.getElementById('backButton').style.display = 'none';
+    }
+});
+
+</script>
+
+</body>
+</html>
+
